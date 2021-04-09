@@ -1,8 +1,5 @@
 # Data lake with aws spark
 
-
-# Data Warehouse with AWS Redshift
-
 Udacity Data Engineering 4th project, building a Data lake using AWS spark services. This project implements a Data warehouse model and pipeline using AWS S3  Bucket and Amazon spark.
 
 - Understanding the problem to solve
