@@ -1,4 +1,4 @@
-# Data lake with aws spark
+# Data lake with AWS spark
 
 Udacity Data Engineering 4th project, building a Data lake using AWS spark services. This project implements a Data Lake in spark AWS S3 Bucket and Amazon spark.
 
@@ -12,7 +12,7 @@ Udacity Data Engineering 4th project, building a Data lake using AWS spark servi
 
 ## Problem understanding
 
-Build an ETL pipeline for a data lake hosted on S3. Load data from S3 bucket, process the data into analytics tables using Spark hosted in Aws sercices, and load them back into S3.
+Build an ETL pipeline for a data lake hosted on S3. Load data from S3 bucket, process the data into analytics tables using Spark hosted in Aws services, and load them back into S3.
 
 ## Data description
 
@@ -32,7 +32,7 @@ The project uses data from [Million Song Dataset](https://labrosa.ee.columbia.ed
 {"artist":"Slipknot","auth":"Logged In","firstName":"Aiden","gender":"M","itemInSession":0,"lastName":"Ramirez","length":192.57424,"level":"paid","location":"New York-Newark-Jersey City, NY-NJ-PA","method":"PUT","page":"NextSong","registration":1540283578796.0,"sessionId":19,"song":"Opium Of The People (Album Version)","status":200,"ts":1541639510796,"userAgent":"\"Mozilla\/5.0 (Windows NT 6.1) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/36.0.1985.143 Safari\/537.36\"","userId":"20"}
 ```
 
-The data is available in the udacity buckets 
+The data is available in the Udacity buckets 
 
 ```
   Song data: s3://udacity-dend/song_data
@@ -63,23 +63,21 @@ The data lake will be designed for analytics using Fact and Dimensions tables on
 
 ### Logic model
 
-![Logic model](https://github.com/Fer-Bonilla/Udacity-Data-Engineering-datawarehouse-with-aws-redshift/blob/main/redshift-udacity/DefaultLayout.svg)
+![Logic model](https://github.com/Fer-Bonilla/Udacity-Data-Engineering-datalake-with-aws-spark/blob/main/images/dataLake_model.png)
 
 
 ## Project structure
 
 The project structure is based on the Udacity's project template:
-1. **test.ipynb** Notebook to verify the etl scripts execution
-2. **create_tables.py** drops and creates your tables. You run this file to reset your tables before each time you run your ETL scripts
-3. **etl.py** reads and processes files from song_data and log_data and loads them into the databse tables
-4. **sql_queries.py** contains all the sql queries for create and fill the tables
-5. **README.md** provides discussion on your project
-6. **swh.cfg** configuration parameters (Connection strindg and file paths)
+1. **etl.py** reads and processes files from song_data and log_data and loads them into spark datalake parquet files
+2. **README.md** Provides instructions about the project
+3. **dl.cfg** configuration parameters (Access and secrect Key)
 
 ## ETL Pipeline description
 
 ### etl.py
-The ETL process is developed in the etl.py script. Data is load from the JSON files first to the staging tables from the json files (Songs and events). Using the Redshift services execute the data copy to the staging tables and then executes the data extraction to the fact and dimensions tables.
+The ETL process is developed in the etl.py script. Data is load from the JSON files and processed using the Pyspark framework creating the tables structure and saving into parquet files. The script process first the songs json files and create the artist and songs parquet files, then process the event logs files and create the users, time and songplays spark tables and write to the parket files in the S3 bucket created in AWS services.
+
 
 ### ETL pipeline diagram
 
