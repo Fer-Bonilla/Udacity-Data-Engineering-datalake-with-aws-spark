@@ -1,17 +1,18 @@
 # Data lake with aws spark
 
-Udacity Data Engineering 4th project, building a Data lake using AWS spark services. This project implements a Data warehouse model and pipeline using AWS S3  Bucket and Amazon spark.
+Udacity Data Engineering 4th project, building a Data lake using AWS spark services. This project implements a Data Lake in spark AWS S3 Bucket and Amazon spark.
 
 - Understanding the problem to solve
-- Modeling the database and pipeline model
-- Create the database schema
-- ETL development in Python
+- data description
+- Modeling the datalake
+- Project structure
+- ETL description
+- Running the ETL pipeline
 
 
 ## Problem understanding
 
-Build and test an ETL pipeline for a database hosted on AWS Redshift with the data warehouse model. The data need to be load from S3 to staging tables on Redshift and execute SQL statements that create the analytics tables from these staging tables.
-
+Build an ETL pipeline for a data lake hosted on S3. Load data from S3 bucket, process the data into analytics tables using Spark hosted in Aws sercices, and load them back into S3.
 
 ## Data description
 
@@ -38,22 +39,12 @@ The data is available in the udacity buckets
   Log data: s3://udacity-dend/log_data
 
 ```
-Paths pointing to S3 buckets are defined in the dwh.dfg file.
+Paths pointing to S3 buckets are defined in the etl.py
 
 
-## Database Model
+## Datalake Model
 
-The database will be designed for analytics using Fact and Dimensions tables on a Star Schema architecture, and staging tables to read data from s3 data storage:
-
-**Staging Tables**
-
-```
-  staging_events - Load the raw data from log events json files
-  artist, auth, firstName, gender, itemInSession, lastName, length, level, location, method, page, registration, sessionId, song, status, ts, userAgent, userId
-
-  staging_songs
-  num_songs	artist_id	artist_latitude	artist_longitude	artist_location	artist_name	song_id	title	duration	year
-```  
+The data lake will be designed for analytics using Fact and Dimensions tables on a Star Schema architecture using the spark apy for python, the info is load from S3 using the Amazon s3 api.
 
 **Fact Table**
 ```
@@ -98,20 +89,19 @@ The ETL process is developed in the etl.py script. Data is load from the JSON fi
 
 A. Components required
 
- 1.	AWS amazon account
+ 1.	Create or login into AWS amazon account
  2.	User created on IAM AWS and administrative role to connect from remote connection
  3.	Jupyter notebooks environment available
- 4.	Python packages: psycopg2 and python-sql
+ 4.	Python packages: pyspark
 
 B Running the pipeline
 
  1.	Clone the repository
  2.	Create IAM role and user
- 3.	Create the Redshift cluster and get the connection data
- 4.	Configure the connection values in the dwh.cfg file
- 5.	Run create_tables.py (Drop tables and create again)
- 6.	Run etl.py (Run the ETL process)
- 7.	Run test.ipynb notebook to validate the data. (Execute some selects and counts)
+ 3.	Create and S3 bucket and setup the url locater in the etl.py file
+ 4.	Configure the session values (Access key and identification key) in the dl.cfg file
+ 5.	Run the etl.py pipeline
+ 6.	Verify the S3 bucket, you need to see the parquet files for each table
 
 ## Author 
 Fernando Bonilla [linkedin](https://www.linkedin.com/in/fer-bonilla/)
