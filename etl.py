@@ -27,8 +27,7 @@ import os
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.functions import udf, col, monotonically_increasing_id
-from pyspark.sql.functions import year, month, dayofmonth, hour, weekofyear, date_format
-from pyspark.sql import Window
+from pyspark.sql.functions import year, month, dayofmonth, hour, weekofyear, dayofweek
 
 config = configparser.ConfigParser()
 config.read('dl.cfg')
@@ -83,13 +82,13 @@ def process_song_data(spark, input_data, output_data):
     df_song = spark.read.json(song_data)
 
     # extract columns to create songs table
-    songs_table = df_song['song_id', 'title', 'artist_id', 'artist_name', 'year', 'duration']
+    songs_table = df_song['song_id', 'title', 'artist_id', 'year', 'duration']
     
     # drop duplicated rows
     songs_table = songs_table.dropDuplicates(['song_id'])
     
     # write songs table to parquet files partitioned by year and artist
-    songs_table.write.mode('overwrite').partitionBy('year', 'artist_name').parquet(output_data+'songs')
+    songs_table.write.mode('overwrite').partitionBy('year', 'artist_id').parquet(output_data+'songs')
 
     # extract columns to create artists table
     artists_table = df_song['artist_id', 'artist_name', 'artist_location', 'artist_latitude', 'artist_longitude']
@@ -151,7 +150,8 @@ def process_log_data(spark, input_data, output_data):
         dayofmonth('datetime').alias('day'),
         weekofyear('datetime').alias('week'),
         month('datetime').alias('month'),
-        year('datetime').alias('year') 
+        year('datetime').alias('year'),
+        dayofweek('datetime').alias('weekday')
    )
             
     # write time table to parquet files partitioned by year and month
