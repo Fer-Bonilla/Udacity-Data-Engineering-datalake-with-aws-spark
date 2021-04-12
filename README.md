@@ -79,10 +79,6 @@ The project structure is based on the Udacity's project template:
 The ETL process is developed in the etl.py script. Data is load from the JSON files and processed using the Pyspark framework creating the tables structure and saving into parquet files. The script process first the songs json files and create the artist and songs parquet files, then process the event logs files and create the users, time and songplays spark tables and write to the parket files in the S3 bucket created in AWS services.
 
 
-### ETL pipeline diagram
-
-![ETL pipeline diagram](https://github.com/Fer-Bonilla/Udacity-Data-Engineering-datawarehouse-with-aws-redshift/blob/main/images/ETL_pipeline.png)
-
 ## Instructions to run the pipeline
 
 A. Components required
